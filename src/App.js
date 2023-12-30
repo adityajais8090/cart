@@ -2,7 +2,7 @@ import React from 'react';
 import Cart from './Cart';
 import Navbar from './Navbar';
 import './firebaseConfig';
-import { getFirestore, collection, getDocs, onSnapshot, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, onSnapshot, addDoc, doc, updateDoc, deleteDoc, where, query } from 'firebase/firestore';
 
 class App extends React.Component {
   constructor(){
@@ -23,11 +23,15 @@ class App extends React.Component {
 // define componentDidMount ..............
    componentDidMount() {
     const db = getFirestore();
+    const queryRef = collection(db, "price");
 
 //fetch data from database .........
     getDocs(collection(db, 'products'))
     .then ((snapshot)=> {
       console.log(snapshot);
+
+      // const queryRef = collection(db, "price");
+      // query(queryRef, where("price", "<=", 5000));
 
       const products = snapshot.docs.map((doc) => {
         const data = doc.data();
@@ -117,11 +121,14 @@ const productRef = doc(db, 'products', products[index].id);
                 });
     
    };
-   
+
    handleDeleteProduct = (id) => {
     const db = getFirestore();
     deleteDoc(doc(db, 'products', id));
    };
+
+    
+    
 
    getCartCount = (product) => {
     const{products} = this.state;
