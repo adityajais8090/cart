@@ -1,17 +1,15 @@
 import React from 'react';
 
-class CartItem extends React.Component{
-   
+const CartItem = (props) => {
 
-    render(){
-        console.log('this.props', this.props.product);
-        const { title, price, qty, id } = this.props.product;
+        console.log('props', props.product);
+        const { title, price, qty } = props.product;
         const {
             product, 
-            increaseQuantity, 
-            decreaseQuantity, 
-            deleteProduct
-          } = this.props;
+            onIncreaseQuantity, 
+            onDecreaseQuantity, 
+            onDeleteProduct
+          } = props;
         return(
             
         <div className='cart-item'>
@@ -23,23 +21,22 @@ class CartItem extends React.Component{
                 <div style={ {fontSize : 25} }>{title}</div>
                 <div style = {{color :'#777'}}>Rs {price}</div>
                 <div style = {{color :'#777'}}>Qty : {qty}</div>
-                <div style = {{color :'#777'}}>Key : {id}</div>
                 <div className='cart-item-actions'>
 
                 <img className='action-icons' 
                 alt='increase' 
                 src = 'https://cdn-icons-png.flaticon.com/128/992/992651.png'
-                onClick = {()=> increaseQuantity(product)}
+                onClick = {()=> onIncreaseQuantity(product)}
                 />
                 <img className='action-icons' 
                 alt='decrease' 
                 src = 'https://cdn-icons-png.flaticon.com/128/1828/1828906.png'
-                onClick = {()=> decreaseQuantity(product)}
+                onClick = {()=> onDecreaseQuantity(product)}
                 />
                 <img className='action-icons' 
                 alt='delete' 
                 src = 'https://cdn-icons-png.flaticon.com/128/1214/1214428.png'
-                onClick = {()=> deleteProduct(product.id)}
+                onClick = {()=> onDeleteProduct(product.id)}
                 />
 
                     </div>
@@ -47,7 +44,6 @@ class CartItem extends React.Component{
             </div>
         );
     }
-}
     
   const styles = {
     image: {
@@ -56,8 +52,6 @@ class CartItem extends React.Component{
         borderRadius:4,
     }
   }
-
-
 
 
 export default CartItem;
